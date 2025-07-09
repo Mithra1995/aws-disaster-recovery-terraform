@@ -22,7 +22,17 @@ It aims to ensure high availability, automatic failover, and data resiliency acr
    ```bash
    cd environments/dev
 
-Initialize Terraform:
+2. Initialize Terraform:
 
 
 terraform init
+
+3. Plan & apply:
+
+terraform plan
+terraform apply
+
+
+ Author
+
+ Mithra1995
