@@ -1,13 +1,13 @@
 # AWS Disaster Recovery – Terraform Project
 
 ## 📖 Project Overview
-
-This repository contains Terraform code to provision a multi-region AWS infrastructure for Disaster Recovery (DR) purposes.  
-It aims to ensure high availability, automatic failover, and data resiliency across two AWS regions.
+This repository contains Terraform code that provisions a **multi-region AWS Disaster Recovery (DR)** environment.  
+The goal is to provide high availability, automatic fail-over, and data durability across two AWS regions.
 
 ---
 
 ## 📁 Project Structure
+
 
 
 ![image](https://github.com/user-attachments/assets/6b662a82-d652-4ad9-8530-023e6c5d7f4b)
@@ -18,21 +18,24 @@ It aims to ensure high availability, automatic failover, and data resiliency acr
 
 ## 🚀 How to Use
 
-1. Navigate to the environment folder:
+1. Clone and enter the environment folder  
    ```bash
-   cd environments/dev
+   git clone https://github.com/<your-username>/aws-disaster-recovery-terraform.git
+   cd aws-disaster-recovery-terraform/environments/dev
+Initialise Terraform
 
-2. Initialize Terraform:
-
-
+bash
+Copy
+Edit
 terraform init
 
-3. Plan & apply:
+Review the execution plan & deploy
 
+bash
+Copy
+Edit
 terraform plan
 terraform apply
 
-
- Author
-
- Mithra1995
+✍️ Author
+Mithra1995
