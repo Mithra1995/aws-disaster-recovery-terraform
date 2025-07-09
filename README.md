@@ -40,6 +40,10 @@ Global Traffic Management (Route 53)
 | A (Alias)   | us-east-1  | PRIMARY   | ✅ Enabled     |
 | A (Alias)   | us-west-2  | SECONDARY | ✅ Enabled     |
 
+
+If the primary ALB fails, Route 53 automatically routes traffic to the secondary region.
+
+
 Security Best Practices
 
 
