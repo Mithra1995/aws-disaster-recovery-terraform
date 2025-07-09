@@ -1,20 +1,33 @@
 version: 0.2
 
+############################################################
+# 1) Environment                                           #
+############################################################
 env:
   variables:
-    DB_USER: "dbadmin"
-    DB_PASS: "StrongPass123"
-    TF_VERSION:        "1.7.1"
-    TF_WORKING_DIR:    "environments/dev"
-    TF_STATE_BUCKET:   "dr-demo-use1-east-37cfd18a"   # ✅ actual bucket name
-    TF_STATE_KEY:      "env/terraform.tfstate"
-    TF_STATE_REGION:   "us-east-1"
-    APPLY:             "false"
+    # ----- DB credentials (picked up automatically) -----
+    TF_VAR_db_master_username:  "dbadmin"         # or leave blank and set in the console
+    TF_VAR_db_master_password:  "StrongPass123"   # (Secrets Manager preferred)
+
+    # ----- Terraform settings -----
+    TF_VERSION:      "1.7.1"
+    TF_WORKING_DIR:  "environments/dev"
+
+    # ----- Remote state bucket -----
+    TF_STATE_BUCKET: "dr-demo-use1-east-37cfd18a"
+    TF_STATE_KEY:    "env/terraform.tfstate"
+    TF_STATE_REGION: "us-east-1"
+
+    # ----- Toggle auto-apply -----
+    APPLY:           "false"
 
 cache:
   paths:
     - "~/.terraform.d/plugin-cache/**"
 
+############################################################
+# 2) Build phases                                          #
+############################################################
 phases:
   install:
     runtime-versions:
@@ -23,6 +36,7 @@ phases:
       - curl -sSL "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" -o /tmp/terraform.zip
       - unzip -oq /tmp/terraform.zip -d /usr/local/bin
       - terraform -version
+
   pre_build:
     commands:
       - cd "$TF_WORKING_DIR"
@@ -31,21 +45,27 @@ phases:
           -backend-config="bucket=${TF_STATE_BUCKET}" \
           -backend-config="key=${TF_STATE_KEY}" \
           -backend-config="region=${TF_STATE_REGION}"
+
   build:
     commands:
+      - terraform fmt -recursive
       - terraform fmt -check
       - terraform validate
-      - terraform plan -out=tfplan
-  post_build:
-    commands:
-      - |
-        if [ "$APPLY" = "true" ]; then
-          terraform apply -auto-approve tfplan
-        else
-          echo "✅ Apply skipped — set APPLY=true to run apply."
-        fi
+      - terraform plan -out=tfplan          # creds are injected automatically
 
+  post_build:
+    commands: |
+      if [ "$APPLY" = "true" ]; then
+        terraform apply -auto-approve tfplan
+      else
+        echo "✅ Apply skipped — set APPLY=true to run apply."
+      fi
+
+############################################################
+# 3) Artifacts                                             #
+############################################################
 artifacts:
+  base-directory: "$TF_WORKING_DIR"
   files:
-    - "$TF_WORKING_DIR/tfplan"
+    - "tfplan"
   discard-paths: yes
