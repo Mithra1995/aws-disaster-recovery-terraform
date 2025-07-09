@@ -10,3 +10,4 @@ It aims to ensure high availability, automatic failover, and data resiliency acr
 ## 📁 Project Structure
 
 
+![image](https://github.com/user-attachments/assets/6b662a82-d652-4ad9-8530-023e6c5d7f4b)
