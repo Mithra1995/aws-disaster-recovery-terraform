@@ -22,18 +22,16 @@ The goal is to provide high availability, automatic fail-over, and data durabili
    ```bash
    git clone https://github.com/<your-username>/aws-disaster-recovery-terraform.git
    cd aws-disaster-recovery-terraform/environments/dev
-Initialise Terraform
 
-bash
-Copy
-Edit
+   
+2. Initialise Terraform
+
+
 terraform init
 
-Review the execution plan & deploy
+3. Review the execution plan & deploy
 
-bash
-Copy
-Edit
+
 terraform plan
 terraform apply
 
