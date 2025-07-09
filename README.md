@@ -30,12 +30,18 @@ terraform plan
 terraform apply
 
 Global Traffic Management (Route 53)
+
+
+
 🧠 Failover DNS Record Setup
 Record Type	Region	Role	Health Check
 A (Alias)	us-east-1	PRIMARY	✅ Enabled
 A (Alias)	us-east-2	SECONDARY	✅ Enabled
 
 Security Best Practices
+
+
+
 Principle of Least Privilege IAM policies
 RDS is private and non-publicly accessible
 Security Groups allow only HTTP (80) and SSH (22)
@@ -43,4 +49,7 @@ S3 buckets have versioning and replication enabled
 
 
 ✍️ Author
+
+
+
 Mithra Balasubramaniam
