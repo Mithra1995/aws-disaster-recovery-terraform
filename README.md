@@ -34,9 +34,11 @@ Global Traffic Management (Route 53)
 
 
 🧠 Failover DNS Record Setup
-Record Type	Region	Role	Health Check
-A (Alias)	us-east-1	PRIMARY	✅ Enabled
-A (Alias)	us-east-2	SECONDARY	✅ Enabled
+
+| Record Type | Region     | Role      | Health Check |
+|-------------|------------|-----------|---------------|
+| A (Alias)   | us-east-1  | PRIMARY   | ✅ Enabled     |
+| A (Alias)   | us-west-2  | SECONDARY | ✅ Enabled     |
 
 Security Best Practices
 
