@@ -2,6 +2,8 @@ version: 0.2
 
 env:
   variables:
+    DB_USER: "dbadmin"
+    DB_PASS: "StrongPass123"
     TF_VERSION:        "1.7.1"
     TF_WORKING_DIR:    "environments/dev"
     TF_STATE_BUCKET:   "dr-demo-use1-east-37cfd18a"   # ✅ actual bucket name
