@@ -23,4 +23,6 @@ It aims to ensure high availability, automatic failover, and data resiliency acr
    cd environments/dev
 
 Initialize Terraform:
+
+
 terraform init
