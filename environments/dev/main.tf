@@ -2,11 +2,11 @@ module "vpc_east" {
   source      = "../../modules/network"
   name_prefix = "east"
 
-  vpc_cidr   = var.vpc_cidr
-  pubsub     = var.east_pubsubs
-  pubsub_az  = var.east_pubsub_azs
-  prisub     = var.east_prisubs
-  prisub_az  = var.east_prisub_azs
+  vpc_cidr  = var.vpc_cidr
+  pubsub    = var.east_pubsubs
+  pubsub_az = var.east_pubsub_azs
+  prisub    = var.east_prisubs
+  prisub_az = var.east_prisub_azs
 
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -19,11 +19,11 @@ module "vpc_west" {
   providers   = { aws = aws.west }
   name_prefix = "west"
 
-  vpc_cidr   = var.vpc_cidr_secondary
-  pubsub     = var.west_pubsubs
-  pubsub_az  = var.west_pubsub_azs
-  prisub     = var.west_prisubs
-  prisub_az  = var.west_prisub_azs
+  vpc_cidr  = var.vpc_cidr_secondary
+  pubsub    = var.west_pubsubs
+  pubsub_az = var.west_pubsub_azs
+  prisub    = var.west_prisubs
+  prisub_az = var.west_prisub_azs
 
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -33,13 +33,13 @@ module "vpc_west" {
 
 # –––– 2a.  ALB (east) ––––
 module "web_east_alb" {
-  source              = "../../modules/alb"
+  source = "../../modules/alb"
 
-  name_prefix         = "east"
-  env                 = var.env
+  name_prefix = "east"
+  env         = var.env
 
-  vpc_id              = module.vpc_east.vpc_id
-  subnet_ids          = module.vpc_east.public_subnet_ids
+  vpc_id     = module.vpc_east.vpc_id
+  subnet_ids = module.vpc_east.public_subnet_ids
 
   internal            = false
   https_enabled       = var.alb_https_enabled
@@ -51,34 +51,34 @@ module "web_east_alb" {
 
 # –––– 2b.  Compute (east) ––––
 module "web_east_compute" {
-  source            = "../../modules/compute"
-  name_prefix       = "east"
-  env               = var.env
+  source      = "../../modules/compute"
+  name_prefix = "east"
+  env         = var.env
 
-  ami               = var.ami_east
-  instance_type     = var.instance_type
-  desired_capacity  = var.desired_capacity
-  min_size          = var.min_size
-  max_size          = var.max_size
+  ami              = var.ami_east
+  instance_type    = var.instance_type
+  desired_capacity = var.desired_capacity
+  min_size         = var.min_size
+  max_size         = var.max_size
 
-  vpc_id            = module.vpc_east.vpc_id
-  subnet_ids        = module.vpc_east.public_subnet_ids
-  target_group_arn  = module.web_east_alb.tg_arn
+  vpc_id           = module.vpc_east.vpc_id
+  subnet_ids       = module.vpc_east.public_subnet_ids
+  target_group_arn = module.web_east_alb.tg_arn
 
-  user_data         = filebase64("${path.module}/userdata.sh")
-  instance_profile  = aws_iam_instance_profile.ec2_profile.name  # ← ADD THIS
+  user_data        = filebase64("${path.module}/userdata.sh")
+  instance_profile = aws_iam_instance_profile.ec2_profile.name # ← ADD THIS
 }
 
 # –––– 2c. ALB (west) ––––
 module "web_west_alb" {
-  source              = "../../modules/alb"
-  providers           = { aws = aws.west }
+  source    = "../../modules/alb"
+  providers = { aws = aws.west }
 
-  name_prefix         = "west"
-  env                 = var.env
+  name_prefix = "west"
+  env         = var.env
 
-  vpc_id              = module.vpc_west.vpc_id
-  subnet_ids          = module.vpc_west.public_subnet_ids
+  vpc_id     = module.vpc_west.vpc_id
+  subnet_ids = module.vpc_west.public_subnet_ids
 
   internal            = false
   https_enabled       = false
@@ -90,32 +90,32 @@ module "web_west_alb" {
 
 # –––– 2d. Compute (west) ––––
 module "web_west_compute" {
-  source            = "../../modules/compute"
-  providers         = { aws = aws.west }
-  name_prefix       = "west"
-  env               = var.env
+  source      = "../../modules/compute"
+  providers   = { aws = aws.west }
+  name_prefix = "west"
+  env         = var.env
 
-  ami               = var.ami_west
-  instance_type     = var.instance_type
-  desired_capacity  = var.desired_capacity
-  min_size          = var.min_size
-  max_size          = var.max_size
+  ami              = var.ami_west
+  instance_type    = var.instance_type
+  desired_capacity = var.desired_capacity
+  min_size         = var.min_size
+  max_size         = var.max_size
 
-  vpc_id            = module.vpc_west.vpc_id
-  subnet_ids        = module.vpc_west.public_subnet_ids
-  target_group_arn  = module.web_west_alb.tg_arn
+  vpc_id           = module.vpc_west.vpc_id
+  subnet_ids       = module.vpc_west.public_subnet_ids
+  target_group_arn = module.web_west_alb.tg_arn
 
-  user_data         = filebase64("${path.module}/userdata.sh")
-  instance_profile  = aws_iam_instance_profile.ec2_profile.name  # ← ADD THIS
+  user_data        = filebase64("${path.module}/userdata.sh")
+  instance_profile = aws_iam_instance_profile.ec2_profile.name # ← ADD THIS
 }
 
 #S3
 module "data" {
-  source                   = "../../modules/data"
-  bucket_name_prefix       = "dr-demo-use1"    
-  bucket_name_prefix_secondary = "dr-demo-usw1" 
-  enable_versioning  = true   
-  enable_replication = true  
+  source                       = "../../modules/data"
+  bucket_name_prefix           = "dr-demo-use1"
+  bucket_name_prefix_secondary = "dr-demo-usw1"
+  enable_versioning            = true
+  enable_replication           = true
 
   providers = {
     aws.west = aws.west

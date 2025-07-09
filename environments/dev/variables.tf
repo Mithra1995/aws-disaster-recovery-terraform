@@ -65,7 +65,7 @@ variable "instance_type" {
 variable "ami_east" {
   type        = string
   description = "AMI ID for EC2 instances in east region"
-  default = "ami-05ffe3c48a9991133"
+  default     = "ami-05ffe3c48a9991133"
 }
 variable "ami_west" {
   type    = string
@@ -113,5 +113,5 @@ variable "db_master_password" { type = string }
 variable "name_prefix" {
   description = "Prefix to identify resources uniquely"
   type        = string
-  default = "dev"
+  default     = "dev"
 }
