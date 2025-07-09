@@ -44,14 +44,14 @@ Global Traffic Management (Route 53)
 If the primary ALB fails, Route 53 automatically routes traffic to the secondary region.
 
 
-Security Best Practices
+## Security Best Practices
 
 
 
-Principle of Least Privilege IAM policies
-RDS is private and non-publicly accessible
-Security Groups allow only HTTP (80) and SSH (22)
-S3 buckets have versioning and replication enabled
+. Principle of Least Privilege IAM policies
+. RDS is private and non-publicly accessible
+. Security Groups allow only HTTP (80) and SSH (22)
+. S3 buckets have versioning and replication enabled
 
 
 ✍️ Author
