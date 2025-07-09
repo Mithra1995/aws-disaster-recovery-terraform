@@ -53,6 +53,8 @@ If the primary ALB fails, Route 53 automatically routes traffic to the secondary
 - Security Groups allow only HTTP (80) and SSH (22)  
 - S3 buckets have versioning and replication enabled
 
+  
+
 
 ✍️ Author
 
